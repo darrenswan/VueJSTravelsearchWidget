@@ -25,7 +25,7 @@
             <v-parallax light height="200" src="https://i.picsum.photos/id/364/1024/200.jpg?blur">
               <v-row class="black--text fill-height" align="center">
                 <v-col>
-                  <div class="title mb-2"><span class="white pa-1">{{ itinerary.steps[0].location.name }} ({{ itinerary.steps[0].location.iataCode }}), {{ itinerary.steps[0].location.countryIso2Code }} - {{ itinerary.steps[1].location.name }} ({{ itinerary.steps[1].location.iataCode }}), {{ itinerary.steps[1].location.countryIso2Code }}</span></div>
+                  <div class="title mb-2"><span class="white pa-1">{{ itinerary.steps[0].startLocation.name }} ({{ itinerary.steps[0].startLocation.iataCode }}), {{ itinerary.steps[0].startLocation.countryIso2Code }} - {{ itinerary.steps[1].startLocation.name }} ({{ itinerary.steps[1].startLocation.iataCode }}), {{ itinerary.steps[1].startLocation.countryIso2Code }}</span></div>
                   <div class="title mb-2"><span class="white pa-1">{{ formatDate(searchCriteria.legs[0].departDate) }} - {{ formatDate(searchCriteria.legs[1].departDate) }}</span></div>
                   <div class="title mb-2"><span class="white pa-1">{{ displayPassengersCount }} </span></div>
                   <div><v-btn @click="backToSearch" color="primary lighten-1"><v-icon>mdi-chevron-left</v-icon>New Search</v-btn></div>
@@ -41,8 +41,8 @@
                       <v-img src="https://i.picsum.photos/id/364/720/140.jpg?blur" height="140"></v-img>
                       <v-card-text class="pa-0" style="height:600px;">
                         <div v-for="(airport, i) in itinerary.steps" :key="i">
-                          <v-card-subtitle class="headline grey lighten-2"><v-icon>mdi-airplane</v-icon> {{ airport.location.name }} ({{ airport.location.iataCode }}), {{ airport.location.countryIso2Code }}</v-card-subtitle>
-                          <v-img v-if="airport.location.imageUrl" :src="airport.location.imageUrl" :alt="airport.location.name + ' Terminal Map'"></v-img>
+                          <v-card-subtitle class="headline grey lighten-2"><v-icon>mdi-airplane</v-icon> {{ airport.startLocation.name }} ({{ airport.startLocation.iataCode }}), {{ airport.startLocation.countryIso2Code }}</v-card-subtitle>
+                          <v-img v-if="airport.startLocation.imageUrl" :src="airport.startLocation.imageUrl" :alt="airport.startLocation.name + ' Terminal Map'"></v-img>
                         </div>
                       </v-card-text>
                       <v-divider></v-divider>

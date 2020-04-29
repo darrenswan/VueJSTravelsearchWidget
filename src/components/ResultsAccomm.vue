@@ -25,57 +25,57 @@
             <v-parallax light height="200" :src="headerImageUrl">
               <v-row class="black--text">
                 <v-col>
-                  <div class="title mb-2"><span class="white pa-1">{{ itinerary.steps[0].location.name }}, {{ itinerary.steps[0].location.countryName }}</span></div>
+                  <div class="title mb-2"><span class="white pa-1">{{ itinerary.steps[0].startLocation.name }}, {{ itinerary.steps[0].startLocation.countryName }}</span></div>
                   <div class="title mb-2"><span class="white pa-1">{{ formatDate(searchCriteria.checkinDate) }} - {{ formatDate(searchCriteria.checkoutDate) }}</span></div>
                   <div class="title mb-2"><span class="white pa-1">{{ displayRoomOccupancies }}</span></div>
                   <div><v-btn @click="backToSearch" color="primary lighten-1"><v-icon>mdi-chevron-left</v-icon>New Search</v-btn></div>
                 </v-col>
                 <v-col class="text-right">
-                  <div class="body mb-2"><span class="white pa-1">Local Currency: {{ itinerary.steps[0].location.currencyName }} ({{ itinerary.steps[0].location.currencyCode }})</span></div>
-                  <div v-if="itinerary.steps[0].location.walkscore" class="body walkscore font-weight-bold mb-2"><span class="white pa-1">Walk Score<sup>&reg;</sup>: {{ itinerary.steps[0].location.walkscore.score }} ({{ itinerary.steps[0].location.walkscore.description }})</span></div>
-                  <div v-if="itinerary.steps[0].location.pois"><span v-for="(poi, i) in itinerary.steps[0].location.pois.slice(0, 10)" :key="i"><v-tooltip v-if="poi.thumbnailUrl" bottom><template v-slot:activator="{ on }"><img :src="poi.thumbnailUrl" v-on="on" class="poiimg" :alt="poi.name"></template><span>{{ poi.name }}</span></v-tooltip></span></div>
+                  <div class="body mb-2"><span class="white pa-1">Local Currency: {{ itinerary.steps[0].startLocation.currencyName }} ({{ itinerary.steps[0].startLocation.currencyCode }})</span></div>
+                  <div v-if="itinerary.steps[0].startLocation.walkscore" class="body walkscore font-weight-bold mb-2"><span class="white pa-1">Walk Score<sup>&reg;</sup>: {{ itinerary.steps[0].startLocation.walkscore.score }} ({{ itinerary.steps[0].startLocation.walkscore.description }})</span></div>
+                  <div v-if="itinerary.steps[0].startLocation.pois"><span v-for="(poi, i) in itinerary.steps[0].startLocation.pois.slice(0, 10)" :key="i"><v-tooltip v-if="poi.thumbnailUrl" bottom><template v-slot:activator="{ on }"><img :src="poi.thumbnailUrl" v-on="on" class="poiimg" :alt="poi.name"></template><span>{{ poi.name }}</span></v-tooltip></span></div>
                   <v-dialog scrollable v-model="quickGuide" width="720">
                     <template v-slot:activator="{ on }">
-                      <v-btn color="primary lighten-1" dark v-on="on">Quick Guide to {{ itinerary.steps[0].location.name }}</v-btn>
+                      <v-btn color="primary lighten-1" dark v-on="on">Quick Guide to {{ itinerary.steps[0].startLocation.name }}</v-btn>
                     </template>
                     <v-card>
-                      <v-card-title class="headline grey lighten-2" primary-title>Quick Guide to {{ itinerary.steps[0].location.name }}</v-card-title>
+                      <v-card-title class="headline grey lighten-2" primary-title>Quick Guide to {{ itinerary.steps[0].startLocation.name }}</v-card-title>
                       <v-divider></v-divider>
-                      <v-img v-if="this.itinerary.steps[0].location.imageUrl" :src="this.itinerary.steps[0].location.imageUrl" height="180"></v-img>
+                      <v-img v-if="this.itinerary.steps[0].startLocation.imageUrl" :src="this.itinerary.steps[0].startLocation.imageUrl" height="180"></v-img>
                       <v-card-text class="pa-0" style="height:600px;">
                         <v-list dense>
-                          <v-list-item v-if="itinerary.steps[0].location.summary">
-                            <v-list-item-content v-text="itinerary.steps[0].location.summary"></v-list-item-content>
+                          <v-list-item v-if="itinerary.steps[0].startLocation.summary">
+                            <v-list-item-content v-text="itinerary.steps[0].startLocation.summary"></v-list-item-content>
                           </v-list-item>
-                          <v-list-item v-if="itinerary.steps[0].location.walkscore">
+                          <v-list-item v-if="itinerary.steps[0].startLocation.walkscore">
                             <v-list-item-icon><v-icon large color="primary lighten-2">mdi-walk</v-icon></v-list-item-icon>
-                            <v-list-item-content>Walk Score: {{ itinerary.steps[0].location.walkscore.score }} ({{ itinerary.steps[0].location.walkscore.description }})</v-list-item-content>
+                            <v-list-item-content>Walk Score: {{ itinerary.steps[0].startLocation.walkscore.score }} ({{ itinerary.steps[0].startLocation.walkscore.description }})</v-list-item-content>
                           </v-list-item>
-                          <v-list-item v-if="itinerary.steps[0].location.walkscore.transitScore && itinerary.steps[0].location.walkscore.transitDescription">
+                          <v-list-item v-if="itinerary.steps[0].startLocation.walkscore && itinerary.steps[0].startLocation.walkscore.transitScore && itinerary.steps[0].startLocation.walkscore.transitDescription">
                             <v-list-item-icon><v-icon large color="primary lighten-2">mdi-train</v-icon></v-list-item-icon>
-                            <v-list-item-content>Transit Score: {{ itinerary.steps[0].location.walkscore.transitScore }} ({{ itinerary.steps[0].location.walkscore.transitDescription }})<v-list-item-subtitle v-if="itinerary.steps[0].location.walkscore.transitSummary">{{ itinerary.steps[0].location.walkscore.transitSummary }}</v-list-item-subtitle></v-list-item-content>
+                            <v-list-item-content>Transit Score: {{ itinerary.steps[0].startLocation.walkscore.transitScore }} ({{ itinerary.steps[0].startLocation.walkscore.transitDescription }})<v-list-item-subtitle v-if="itinerary.steps[0].location.walkscore.transitSummary">{{ itinerary.steps[0].location.walkscore.transitSummary }}</v-list-item-subtitle></v-list-item-content>
                           </v-list-item>
-                          <v-list-item v-if="itinerary.steps[0].location.walkscore.bikeScore && itinerary.steps[0].location.walkscore.bikeDescription">
+                          <v-list-item v-if="itinerary.steps[0].startLocation.walkscore && itinerary.steps[0].startLocation.walkscore.bikeScore && itinerary.steps[0].startLocation.walkscore.bikeDescription">
                             <v-list-item-icon><v-icon large color="primary lighten-2">mdi-bicycle</v-icon></v-list-item-icon>
-                            <v-list-item-content>Bike Score: {{ itinerary.steps[0].location.walkscore.bikeScore }} ({{ itinerary.steps[0].location.walkscore.bikeDescription }})</v-list-item-content>
+                            <v-list-item-content>Bike Score: {{ itinerary.steps[0].startLocation.walkscore.bikeScore }} ({{ itinerary.steps[0].startLocation.walkscore.bikeDescription }})</v-list-item-content>
                           </v-list-item>
-                          <v-list-item v-if="itinerary.steps[0].location.currencyName && itinerary.steps[0].location.currencyCode">
+                          <v-list-item v-if="itinerary.steps[0].startLocation.currencyName && itinerary.steps[0].startLocation.currencyCode">
                             <v-list-item-icon><v-icon large color="primary lighten-2">mdi-currency-usd-circle</v-icon></v-list-item-icon>
-                            <v-list-item-content>Local Currency: {{ itinerary.steps[0].location.currencyName }} ({{ itinerary.steps[0].location.currencyCode }})</v-list-item-content>
+                            <v-list-item-content>Local Currency: {{ itinerary.steps[0].startLocation.currencyName }} ({{ itinerary.steps[0].startLocation.currencyCode }})</v-list-item-content>
                           </v-list-item>
-                          <v-list-item v-if="itinerary.steps[0].location.gmtOffset">
+                          <v-list-item v-if="itinerary.steps[0].startLocation.gmtOffset">
                             <v-list-item-icon><v-icon large color="primary lighten-2">mdi-clock</v-icon></v-list-item-icon>
-                            <v-list-item-content>GMT Offset: {{ itinerary.steps[0].location.gmtOffset }}</v-list-item-content>
+                            <v-list-item-content>GMT Offset: {{ itinerary.steps[0].startLocation.gmtOffset }}</v-list-item-content>
                           </v-list-item>
-                          <v-list-item v-if="itinerary.steps[0].location.timezone">
+                          <v-list-item v-if="itinerary.steps[0].startLocation.timezone">
                             <v-list-item-icon><v-icon large color="primary lighten-2">mdi-map-clock</v-icon></v-list-item-icon>
-                            <v-list-item-content>Timezone: {{ itinerary.steps[0].location.timezone }}</v-list-item-content>
+                            <v-list-item-content>Timezone: {{ itinerary.steps[0].startLocation.timezone }}</v-list-item-content>
                           </v-list-item>
                         </v-list>
-                        <div v-if="itinerary.steps[0].location.pois">
+                        <div v-if="itinerary.steps[0].startLocation.pois">
                           <v-list three-line subheader>
-                            <v-subheader>What to see in {{ itinerary.steps[0].location.name }}</v-subheader>
-                            <v-list-item v-for="(poi, i) in itinerary.steps[0].location.pois.slice(0, 12)" :key="i">
+                            <v-subheader>What to see in {{ itinerary.steps[0].startLocation.name }}</v-subheader>
+                            <v-list-item v-for="(poi, i) in itinerary.steps[0].startLocation.pois.slice(0, 12)" :key="i">
                               <v-list-item-avatar v-if="poi.thumbnailUrl" size="64"><v-img :src="poi.thumbnailUrl"></v-img></v-list-item-avatar>
                               <v-list-item-avatar v-else size="64"><v-icon color="primary" size="64">mdi-map-marker</v-icon></v-list-item-avatar>
                               <v-list-item-content>

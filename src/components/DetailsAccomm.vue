@@ -60,9 +60,6 @@
               <v-divider class="mb-4"></v-divider>
               <v-img :src="getMapImage(600,120,13)" height="120"></v-img>
               <div class="mt-2 mb-2"><v-icon color="primary">mdi-map-marker</v-icon>{{ getAddress() }}</div>
-              <div class="mt-2 mb-2" v-if="walkScore">
-                <v-img :src="walkScore.logo_url" height="19"></v-img>{{walkScore.walkscore}}
-              </div>
               <v-divider class="mb-4"></v-divider>
               <h2>What's nearby?</h2>
             </v-col>
@@ -147,6 +144,7 @@ export default {
     return {
       apptoken: '',
       widgetid: '',
+      settings: null,
       language: 'en',
       id: 0,
       key: '',
@@ -170,6 +168,7 @@ export default {
       this.id = this.$route.params.id;
       this.key = this.$route.params.key;
       this.rid = this.$route.params.rid;
+      await this.loadSettings()
       await this.getResults();
     } catch (error) {
       console.error(error);
@@ -178,6 +177,10 @@ export default {
   computed: {
   },
   methods: {
+    async loadSettings() {
+        const settings = await data.loadWidgetSettings(this.apptoken, this.widgetid);
+        if (settings) this.settings = settings
+    },
     async getResults() {
       this.pingCount++;
       const response = await data.getResults(this.apptoken, this.id, this.key, this.reloadAll, 'getinfo');
@@ -221,7 +224,7 @@ export default {
       return addr.join(', ')
     },
     getMapImage: function(width, height, zoom) {
-      return `https://maps.googleapis.com/maps/api/staticmap?center=${this.result.location.latitude},${this.result.location.longitude}&zoom=${zoom}&size=${width}x${height}&maptype=roadmap&markers=icon:https://a.travel-assets.com/shopping-pwa/images/his-preview-marker.png%7C${this.result.location.latitude},${this.result.location.longitude}&key=AIzaSyBytt8VMivWDxywmnOCD4H0zyV8k6qQPaI`
+      return `https://maps.googleapis.com/maps/api/staticmap?center=${this.result.location.latitude},${this.result.location.longitude}&zoom=${zoom}&size=${width}x${height}&maptype=roadmap&markers=icon:https://a.travel-assets.com/shopping-pwa/images/his-preview-marker.png%7C${this.result.location.latitude},${this.result.location.longitude}&key=${this.settings.GoogleMapsApiKey}`
     },
     topDescriptions: function() {
       var top = []
